@@ -18,7 +18,7 @@ class App extends React.Component {
       cityImg: '',
       showData: false,
       weatherData: [],
-
+      dailyWeatherData:[]
     }
   }
 
@@ -61,11 +61,22 @@ class App extends React.Component {
       );
       console.log('weather', this.state.weatherData);
 
- 
+  // getDailyWeather;
+
+  // }
+
+  //http://localhost:3001/dailyweather?city=Amman
+  // getDailyWeather= async () =>{
+   let dailyWeather = `${process.env.REACT_APP_SERVER_LINK}/dailyweather?city=${this.state.citySearch}`;
+   console.log('Daily weather url',dailyWeather);
+
+    let dailyWeatherData = await axios.get(dailyWeather);
+    console.log('Daily weather',dailyWeatherData);
+
+    await this.setState({dailyWeatherData:dailyWeatherData.data})
+       console.log('weather', this.state.dailyWeatherData);
 
   }
-
-
   render() {
     return (
 //       <>
@@ -120,11 +131,20 @@ class App extends React.Component {
         {this.state.showData &&
          <img src={`${this.state.cityImg}`} width={400}  />
         }
-
+<h2>Weather</h2>
 {this.state.showData && 
   this.state.weatherData.map((item)=>{ 
    return  (<div>
      {item.date}
+    {item.description}
+    </div>)
+  })
+   }
+<h2>Daily Weather</h2>
+{this.state.showData && 
+  this.state.dailyWeatherData.map((item)=>{ 
+   return  (<div>
+     {item.date} <br/>
     {item.description}
     </div>)
   })
