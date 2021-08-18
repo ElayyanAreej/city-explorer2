@@ -67,7 +67,7 @@ class App extends React.Component {
 
   //http://localhost:3001/dailyweather?city=Amman
   // getDailyWeather= async () =>{
-   let dailyWeather = `${process.env.REACT_APP_SERVER_LINK_DAILYWEATHER}/daily?city=${this.state.citySearch}`;
+   let dailyWeather = `${process.env.REACT_APP_SERVER_LINK_DAILYWEATHER}/daily?city=${this.state.citySearch}&key=${process.env.REACT_APP_DAILYWEATHER_KEY}`;
    console.log('Daily weather url',dailyWeather);
 
     let dailyWeatherData = await axios.get(dailyWeather);
