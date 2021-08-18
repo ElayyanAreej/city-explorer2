@@ -1,7 +1,9 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
-import Weather from './Component/Weather';
+import Form from 'react-bootstrap/Form'
+import Button from 'react-bootstrap/Button'
+// import Weather from './Component/Weather';
 
 // import Form from 'react-bootstrap/Form'
 // import {Button} from 'react-bootstrap';
@@ -16,7 +18,7 @@ class App extends React.Component {
       cityImg: '',
       showData: false,
       weatherData: [],
-
+      dailyWeatherData:[]
     }
   }
 
@@ -59,33 +61,77 @@ class App extends React.Component {
       );
       console.log('weather', this.state.weatherData);
 
- 
+  // getDailyWeather;
+
+  // }
+
+  //http://localhost:3001/dailyweather?city=Amman
+  // getDailyWeather= async () =>{
+   let dailyWeather = `${process.env.REACT_APP_SERVER_LINK}/dailyweather?city=${this.state.citySearch}`;
+   console.log('Daily weather url',dailyWeather);
+
+    let dailyWeatherData = await axios.get(dailyWeather);
+    console.log('Daily weather',dailyWeatherData);
+
+    await this.setState({dailyWeatherData:dailyWeatherData.data})
+       console.log('weather', this.state.dailyWeatherData);
 
   }
-
-
   render() {
     return (
-      <>
-        <h1>City Explorer</h1>
-        {/* <input type="text"  placeholder="City Name"/> */}
-        {/* <button onSubmit={this.getLocation}>Get The Map</button> */}
-        <form onSubmit={this.getLocation}>
-          <label>City Name</label>
-          <input type="text" placeholder="Enter City Name" name='city' />
+//       <>
+//         <h1>City Explorer</h1>
+//         {/* <input type="text"  placeholder="City Name"/> */}
+//         {/* <button onSubmit={this.getLocation}>Get The Map</button> */}
+//         <form onSubmit={this.getLocation}>
+//           <label>City Name</label>
+//           <input type="text" placeholder="Enter City Name" name='city' />
 
 
-          <button> Get The Map </button>
+//           <button> Get The Map </button>
 
-        </form>
+//         </form>
 
-        {this.state.showData &&
+//         {this.state.showData &&
+//           <p>{this.state.citySearch} Lat:{this.state.cityData.lat} /Lon:{this.state.cityData.lon} </p>}
+
+//         {this.state.showData &&
+//          <img src={`${this.state.cityImg}`} width={400}  />
+//         }
+
+// {this.state.showData && 
+//   this.state.weatherData.map((item)=>{ 
+//    return  (<div>
+//      {item.date}
+//     {item.description}
+//     </div>)
+//   })
+//    }
+
+//       </> 
+
+<>
+      <h1>City Explorer</h1>
+
+<Form onSubmit={this.getLocation}>
+  <Form.Group className="mb-3" controlId="formBasicEmail">
+    <Form.Label>City Name</Form.Label>
+    <Form.Control type="text" placeholder="Enter City Name" name='city' />
+   
+  </Form.Group>
+
+  <Button variant="primary" type="submit">
+  Explorer!
+  </Button>
+</Form>
+
+{this.state.showData &&
           <p>{this.state.citySearch} Lat:{this.state.cityData.lat} /Lon:{this.state.cityData.lon} </p>}
 
         {this.state.showData &&
          <img src={`${this.state.cityImg}`} width={400}  />
         }
-
+<h2>Weather</h2>
 {this.state.showData && 
   this.state.weatherData.map((item)=>{ 
    return  (<div>
@@ -94,8 +140,19 @@ class App extends React.Component {
     </div>)
   })
    }
+<h2>Daily Weather</h2>
+{this.state.showData && 
+  this.state.dailyWeatherData.map((item)=>{ 
+   return  (<div>
+     {item.date} <br/>
+    {item.description}
+    </div>)
+  })
+   }
 
-      </> )
+</>
+
+)
 }
 }
  export default App;
