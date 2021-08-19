@@ -1,10 +1,10 @@
 import React from "react";
 import Card from "react-bootstrap/Card";
 
-class Weather extends React.Component {
+class DailyWeather extends React.Component {
   render() {
     return (
-      <Card style={{ width: "18rem" }}>
+        <Card style={{ width: "18rem" }}>
         <Card.Body>
           <Card.Subtitle className="mb-2 text-muted">
             Date:{this.props.date}
@@ -18,4 +18,4 @@ class Weather extends React.Component {
   }
 }
 
-export default Weather;
+export default DailyWeather;
